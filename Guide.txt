@@ -1,0 +1,21 @@
+** login Details
+Username: Admin
+Password: Admin
+
+** Set Up **
+Requirement Install Xampp on your Device
+
+Extract  jumbo.zip file
+Copy the extracted folder
+go to local disk C >> xamp >> htdocs >> Paste
+
+** Database Set Up **
+Run xampp(start apache and MySql), it will open your browser
+
+On the PhpMyAdmin tab, create new database,name it "Jumbo"
+
+import 'jumbo.sql'(in the extracted folder) in Jumbo database
+
+** Running the System**
+On your browser url type "localhost/jumbo/"
+ 
