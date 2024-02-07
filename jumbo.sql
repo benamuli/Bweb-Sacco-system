@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 22, 2024 at 02:56 PM
+-- Generation Time: Feb 08, 2024 at 12:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -93,10 +93,14 @@ CREATE TABLE `members` (
   `Names` varchar(255) NOT NULL,
   `Unq_number` int(12) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `M_no` varchar(100) NOT NULL,
+  `DOB` date NOT NULL,
+  `Age` int(11) NOT NULL,
   `Telephone` int(11) NOT NULL,
   `gender` varchar(100) NOT NULL,
   `Tax_pin` varchar(100) NOT NULL,
   `Kin` varchar(255) NOT NULL,
+  `Kin_R` varchar(100) NOT NULL,
   `Kin_contact` int(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -104,10 +108,10 @@ CREATE TABLE `members` (
 -- Dumping data for table `members`
 --
 
-INSERT INTO `members` (`id`, `Names`, `Unq_number`, `email`, `Telephone`, `gender`, `Tax_pin`, `Kin`, `Kin_contact`) VALUES
-(1, 'Bernard Muli', 37078569, 'ben@embu.go.ke', 798928733, 'Male', 'A00000000X', 'Lavender', 798928733),
-(2, 'Admin admin', 12345678, 'admin@gmail.com', 712345678, 'Female', 'A00000001X', 'Administrator', 787654321),
-(3, 'Brandon Brandley', 6352410, 'info@gmail.com', 736541278, 'Male', 'A000145756L', 'James Brandley', 725416387);
+INSERT INTO `members` (`id`, `Names`, `Unq_number`, `email`, `M_no`, `DOB`, `Age`, `Telephone`, `gender`, `Tax_pin`, `Kin`, `Kin_R`, `Kin_contact`) VALUES
+(1, 'Bernard Muli', 37078569, 'ben@embu.go.ke', '', '0000-00-00', 0, 798928733, 'Male', 'A00000000X', 'Lavender', '', 798928733),
+(2, 'Admin admin', 12345678, 'admin@gmail.com', '', '0000-00-00', 0, 712345678, 'Female', 'A00000001X', 'Administrator', '', 787654321),
+(3, 'Brandon Brandley', 6352410, 'info@gmail.com', '', '0000-00-00', 0, 736541278, 'Male', 'A000145756L', 'James Brandley', '', 725416387);
 
 -- --------------------------------------------------------
 
