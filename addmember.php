@@ -10,14 +10,18 @@ if (isset($_POST['save'])) {
     // $last_name = $_POST['last_name'];
     $Unq_number = $_POST['Unq_number'];
     $email = $_POST['email'];
+    $M_no = $_POST['M_no'];
+    $DOB = $_POST['DOB'];
+    $Age = $_POST['Age'];
     $Telephone = $_POST['Telephone'];
     $gender = $_POST['gender'];
     $Tax_pin = $_POST['Tax_pin'];
     $Kin = $_POST['Kin'];
+    $Kin_R = $_POST['Kin_R'];
     $Kin_contact = $_POST['Kin_contact'];
 
     // check if fields are empty
-    if ($Names == '' || $email == '' || $Unq_number == '' || $gender == '' || $Telephone == '' || $Kin == '' || $Kin_contact == '') {
+    if ($Names == '' || $email == '' || $Unq_number == ''|| $M_no == ''|| $DOB == '' || $gender == '' || $Telephone == '' || $Kin == '' || $Kin_contact == '') {
         echo "<script>alert('please fill all fields')</script>";
         echo (mysqli_error($con));
         // header('Location:addmember.php');
@@ -25,7 +29,7 @@ if (isset($_POST['save'])) {
     } else {
 
         //inserting to database
-        $sql = "INSERT INTO members (Names,Unq_number,email,Telephone,gender,Tax_pin,Kin,Kin_contact) values ('$Names','$Unq_number','$email','$Telephone','$gender','$Tax_pin','$Kin','$Kin_contact')";
+        $sql = "INSERT INTO members (Names,Unq_number,email,M_no,DOB,Age,Telephone,gender,Tax_pin,Kin,Kin_R,Kin_contact) values ('$Names','$Unq_number','$email','$M_no','$DOB','$Age','$Telephone','$gender','$Tax_pin','$Kin','$Kin_R','$Kin_contact')";
         $result = mysqli_query($con, $sql);
         if ($result) {
             echo "<script>alert('Member Added successfully')</script>";
@@ -45,33 +49,51 @@ if (isset($_POST['save'])) {
             <!-- Nested Row within Card Body -->
             <div class="row">
                 <div class="col-lg-5 d-none d-lg-block">
-                <img  src="assets/jumbo nuts.png">
+                    <img src="assets/jumbo nuts.png">
                 </div>
                 <div class="col-lg-7">
-                    
+
                     <div class="p-5">
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div>
                         <form class="user" action="" method="post">
                             <div class="form-group row">
-                                <!-- <div class="col-sm-6 mb-3 mb-sm-0"> -->
-                                <input type="text" class="form-control form-control-user" id="Names" name="Names" placeholder="Names">
-                                <!-- </div> -->
-                                <!-- <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="last_Name"
-                                        name="last_name" placeholder="Last Name">
-                                </div> -->
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label for="Full Name">Full Name</label>
+                                    <input type="text" class="form-control form-control-user" id="Names" name="Names"
+                                        placeholder="Names">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="Email">Email</label>
+                                    <input type="email" class="form-control form-control-user" id="email" name="email"
+                                        placeholder="Email Address">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email Address">
+                            <div class="form-group row">
+
+                                <div class="col-sm-6">
+                                    <label for="Membership No.">Membership No.</label>
+                                    <input type="text" class="form-control form-control-user" id="M_no" name="M_no"
+                                        placeholder="Member Number">
+                                </div>
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label for="Identification Number">Identification Number</label>
+                                    <input type="text" class="form-control form-control-user" id="Unq_number"
+                                        name="Unq_number" placeholder="Id No.">
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" id="Unq_number" name="Unq_number" placeholder="Id No.">
+                                    <label for="Date of Birth">Date of Birth</label>
+                                    <input type="date" class="form-control form-control-user" id="DOB" name="DOB"
+                                        placeholder="DOB">
                                 </div>
+
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="Telephone" name="Telephone" placeholder="Telephone No.">
+                                    <label for="Telephone No.">Telephone No.</label>
+                                    <input type="text" class="form-control form-control-user" id="Telephone"
+                                        name="Telephone" placeholder="Telephone No. +254">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -86,15 +108,28 @@ if (isset($_POST['save'])) {
                                                         id="exampleInputPassword" placeholder="Gender"> -->
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="Tax_pin" name="Tax_pin" placeholder="Tax Pin">
+                                    <label for="Kra Pin">Kra Pin</label>
+                                    <input type="text" class="form-control form-control-user" id="Tax_pin"
+                                        name="Tax_pin" placeholder="Tax Pin">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" id="Kin" name="Kin" placeholder="Next of kin">
+                                    <label for="Name of Next of Kin">Name of Next of Kin</label>
+                                    <input type="text" class="form-control form-control-user" id="Kin" name="Kin"
+                                        placeholder="Next of kin">
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="Kin_contact" name="Kin_contact" placeholder="Next of Kin Contact">
+                                    <label for="R Next of Kin">Relationship of Next of Kin</label>
+                                    <input type="text" class="form-control form-control-user" id="Kin_R" name="Kin_R"
+                                        placeholder="Next of Kin Relationship">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label for="Name of Next of Kin">Contact of Next of Kin</label>
+                                    <input type="text" class="form-control form-control-user" id="Kin_contact"
+                                        name="Kin_contact" placeholder="Next of Kin Contact">
                                 </div>
                             </div>
                             <!-- submit -->
@@ -134,7 +169,8 @@ include("footer.php");
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
