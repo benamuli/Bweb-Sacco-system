@@ -48,17 +48,17 @@ function get_active_loans()
   $select_query = "select * from loans where App_status LIKE 'Approved'";
   $result_query = mysqli_query($con, $select_query);
   $num_of_rows = mysqli_num_rows($result_query);
-    if ($num_of_rows == 0) {
-      echo "<h2 class='text-center text-danger'>No results match!!</h2>";
-    }
-    while ($row = mysqli_fetch_assoc($result_query)) {
-      $id = $row['id'];
-     $Names = $row['Names'];
+  if ($num_of_rows == 0) {
+    echo "<h2 class='text-center text-danger'>No results match!!</h2>";
+  }
+  while ($row = mysqli_fetch_assoc($result_query)) {
+    $id = $row['id'];
+    $Names = $row['Names'];
     $Id_number = $row['Id_number'];
     $App_status = $row['App_status'];
     $Disb_amount = $row['Disb_amount'];
-     $Loan_type = $row['Loan_type'];
-      echo "
+    $Loan_type = $row['Loan_type'];
+    echo "
       <table class='table table-bordered table-light'>
       <thead>
    <tr>
@@ -81,27 +81,27 @@ function get_active_loans()
  </tr>
  <tbody>
  </table>";
-    }
   }
-  function get_settled_loans()
-  {
-    global $con;
-    $select_query = "select * from loans where Balance<=0";
-    $result_query = mysqli_query($con, $select_query);
-    $num_of_rows = mysqli_num_rows($result_query);
-      if ($num_of_rows == 0) {
-        echo "<h2 class='text-center text-danger'>No results match!!</h2>";
-      }
-      while ($row = mysqli_fetch_assoc($result_query)) {
-        $id = $row['id'];
-       $Names = $row['Names'];
-      $Id_number = $row['Id_number'];
-      $App_status = $row['App_status'];
-      $Disb_amount = $row['Disb_amount'];
-       $Loan_type = $row['Loan_type'];
-       $Paid = $row['Paid'];
-       $Balance = $row['Balance'];
-        echo "
+}
+function get_settled_loans()
+{
+  global $con;
+  $select_query = "select * from loans where Balance<=0";
+  $result_query = mysqli_query($con, $select_query);
+  $num_of_rows = mysqli_num_rows($result_query);
+  if ($num_of_rows == 0) {
+    echo "<h2 class='text-center text-danger'>No results match!!</h2>";
+  }
+  while ($row = mysqli_fetch_assoc($result_query)) {
+    $id = $row['id'];
+    $Names = $row['Names'];
+    $Id_number = $row['Id_number'];
+    $App_status = $row['App_status'];
+    $Disb_amount = $row['Disb_amount'];
+    $Loan_type = $row['Loan_type'];
+    $Paid = $row['Paid'];
+    $Balance = $row['Balance'];
+    echo "
         <table class='table table-bordered table-light'>
         <thead>
      <tr>
@@ -128,8 +128,18 @@ function get_active_loans()
    </tr>
    <tbody>
    </table>";
-      }
-    }
+  }
+}
+// function reg_number()
+// {
+  
+//   $regNum = '';
+//   $uniqueId = str_pad($i, 2, '0', STR_PAD_LEFT);
+//   $date = date('y');
+//   $regNum = "SCH" . '\\' . $date . '\\' . $uniqueId;
+//   return $regNum;
+// };
+// echo reg_number(4);
 // function get_total_female()
 // {
 //   global $con;

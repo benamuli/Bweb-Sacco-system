@@ -4,6 +4,7 @@ if (!isset($_SESSION['Username']))
     header('location:login.php');
 include("sidebar.php");
 include('./includes/connection.php');
+include('./includes/functions.php');
 
 if (isset($_POST['save'])) {
     $Names = $_POST['Names'];
@@ -12,24 +13,30 @@ if (isset($_POST['save'])) {
     $email = $_POST['email'];
     $M_no = $_POST['M_no'];
     $DOB = $_POST['DOB'];
-    $Age = $_POST['Age'];
+    $Age = (date('Y') - date('Y', strtotime($DOB)));
     $Telephone = $_POST['Telephone'];
     $gender = $_POST['gender'];
     $Tax_pin = $_POST['Tax_pin'];
     $Kin = $_POST['Kin'];
     $Kin_R = $_POST['Kin_R'];
     $Kin_contact = $_POST['Kin_contact'];
-
+    // accessing image & PDF
+    $M_image = $_FILES['M_image']['name'];
+    $M_form = $_FILES['pdf_file']['name'];
+    // storing images & PDF
+    $temp_image = $_FILES['M_image']['tmp_name'];
+    $temp_file = $_FILES['pdf_file']['tmp_name'];
     // check if fields are empty
-    if ($Names == '' || $email == '' || $Unq_number == ''|| $M_no == ''|| $DOB == '' || $gender == '' || $Telephone == '' || $Kin == '' || $Kin_contact == '') {
+    if ($Names == '' || $email == '' || $Unq_number == '' || $M_no == '' || $DOB == '' || $gender == '' || $Telephone == '' || $Kin == '' || $Kin_contact == '') {
         echo "<script>alert('please fill all fields')</script>";
         echo (mysqli_error($con));
         // header('Location:addmember.php');
         // exit;
     } else {
-
+        move_uploaded_file($temp_image, "./member_image/$M_image");
+        move_uploaded_file($temp_file, "./pdf/$M_form");
         //inserting to database
-        $sql = "INSERT INTO members (Names,Unq_number,email,M_no,DOB,Age,Telephone,gender,Tax_pin,Kin,Kin_R,Kin_contact) values ('$Names','$Unq_number','$email','$M_no','$DOB','$Age','$Telephone','$gender','$Tax_pin','$Kin','$Kin_R','$Kin_contact')";
+        $sql = "INSERT INTO members (Names,Unq_number,email,M_no,DOB,Age,Telephone,gender,Tax_pin,Kin,Kin_R,Kin_contact,M_image,M_form) values ('$Names','$Unq_number','$email','$M_no','$DOB','$Age','$Telephone','$gender','$Tax_pin','$Kin','$Kin_R','$Kin_contact','$M_image','$M_form')";
         $result = mysqli_query($con, $sql);
         if ($result) {
             echo "<script>alert('Member Added successfully')</script>";
@@ -57,43 +64,37 @@ if (isset($_POST['save'])) {
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div>
-                        <form class="user" action="" method="post">
+                        <form class="user" action="" method="post" enctype="multipart/form-data">
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="Full Name">Full Name</label>
-                                    <input type="text" class="form-control form-control-user" id="Names" name="Names"
-                                        placeholder="Names">
+                                    <input type="text" class="form-control form-control-user" id="Names" name="Names" placeholder="Names">
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="Email">Email</label>
-                                    <input type="email" class="form-control form-control-user" id="email" name="email"
-                                        placeholder="Email Address">
+                                    <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email Address">
                                 </div>
                             </div>
                             <div class="form-group row">
 
                                 <div class="col-sm-6">
                                     <label for="Membership No.">Membership No.</label>
-                                    <input type="text" class="form-control form-control-user" id="M_no" name="M_no"
-                                        placeholder="Member Number">
+                                    <input type="text" class="form-control form-control-user" id="M_no" name="M_no" placeholder="Membership No">
                                 </div>
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="Identification Number">Identification Number</label>
-                                    <input type="text" class="form-control form-control-user" id="Unq_number"
-                                        name="Unq_number" placeholder="Id No.">
+                                    <input type="text" class="form-control form-control-user" id="Unq_number" name="Unq_number" placeholder="Id No.">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="Date of Birth">Date of Birth</label>
-                                    <input type="date" class="form-control form-control-user" id="DOB" name="DOB"
-                                        placeholder="DOB">
+                                    <input type="date" class="form-control form-control-user" id="DOB" name="DOB" placeholder="DOB">
                                 </div>
 
                                 <div class="col-sm-6">
                                     <label for="Telephone No.">Telephone No.</label>
-                                    <input type="text" class="form-control form-control-user" id="Telephone"
-                                        name="Telephone" placeholder="Telephone No. +254">
+                                    <input type="text" class="form-control form-control-user" id="Telephone" name="Telephone" placeholder="Telephone No. +254">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -109,28 +110,32 @@ if (isset($_POST['save'])) {
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="Kra Pin">Kra Pin</label>
-                                    <input type="text" class="form-control form-control-user" id="Tax_pin"
-                                        name="Tax_pin" placeholder="Tax Pin">
+                                    <input type="text" class="form-control form-control-user" id="Tax_pin" name="Tax_pin" placeholder="Tax Pin">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="Name of Next of Kin">Name of Next of Kin</label>
-                                    <input type="text" class="form-control form-control-user" id="Kin" name="Kin"
-                                        placeholder="Next of kin">
+                                    <input type="text" class="form-control form-control-user" id="Kin" name="Kin" placeholder="Next of kin">
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="R Next of Kin">Relationship of Next of Kin</label>
-                                    <input type="text" class="form-control form-control-user" id="Kin_R" name="Kin_R"
-                                        placeholder="Next of Kin Relationship">
+                                    <input type="text" class="form-control form-control-user" id="Kin_R" name="Kin_R" placeholder="Next of Kin Relationship">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6">
-                                    <label for="Name of Next of Kin">Contact of Next of Kin</label>
-                                    <input type="text" class="form-control form-control-user" id="Kin_contact"
-                                        name="Kin_contact" placeholder="Next of Kin Contact">
+                                    <label for="Contact of Next of Kin">Contact of Next of Kin</label>
+                                    <input type="text" class="form-control form-control-user" id="Kin_contact" name="Kin_contact" placeholder="+254xxxxxxxxxxx">
                                 </div>
+                                <div class="col-sm-6">
+                                    <label for="passport">Member Passport</label>
+                                    <input type="file" class=" form-control-user" id="M_image" name="M_image">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="passport">Member form</label>
+                                <input type="file" class="form-control " id="pdf_file" name="pdf_file">
                             </div>
                             <!-- submit -->
                             <div class="col-md-4">
@@ -169,8 +174,7 @@ include("footer.php");
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
