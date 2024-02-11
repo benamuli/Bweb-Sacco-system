@@ -8,6 +8,7 @@ $id = $_GET['infoid'];
 $sql = "SELECT * FROM members where id=$id ";
 $results = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($results);
+
 $id = $row['id'];
 $Names = $row['Names'];
 $Unq_number = $row['Unq_number'];
@@ -35,9 +36,9 @@ $M_form = $row['M_form'];
             <button class="btn btn-info m-2"><a href="members.php">Back</a></button>
             <!-- Nested Row within Card Body -->
             <div class="row">
-                <!-- <div class="col-lg-5 d-none d-lg-block">
-                    <img src="./member_image/<?php echo $row['temp_image']; ?>">
-                </div> -->
+                <div class="col-lg-5 d-none d-lg-block">
+                    <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row['M_image']); ?>">
+                </div>
                 <div class="col-lg-7">
 
                     <div class="p-5">

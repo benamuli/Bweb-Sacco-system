@@ -10,21 +10,28 @@ if (isset($_POST['save'])) {
     $email = $_POST['email'];
     $Telephone = $_POST['Telephone'];
     $gender = $_POST['gender'];
+    $SDOB = $_POST['SDOB'];
+    $Age = (date('Y') - date('Y', strtotime($SDOB)));
     $Tax_pin = $_POST['Tax_pin'];
     $E_date = $_POST['E_date'];
     $Designation = $_POST['Designation'];
     $E_type = $_POST['E_type'];
     $Department = $_POST['Department'];
-
+    // accessing image & PDF
+    $S_image = $_FILES['S_image']['name'];
+    $S_letter = $_FILES['S_letter']['name'];
+    // storing images & PDF
+    $temp_image = $_FILES['S_image']['tmp_name'];
+    $temp_file = $_FILES['S_letter']['tmp_name'];
     // check if fields are empty
-    if ($Names == '' || $email == '' || $Id_number == '' || $gender == '' || $Telephone == '' || $E_date == '' || $Designation == '' || $E_type == '' || $Department == '') {
+    if ($Names == '' || $email == '' || $Id_number == '' || $SDOB == '' || $gender == '' || $Telephone == '' || $E_date == '' || $Designation == '' || $E_type == '' || $Department == '' || $S_image == '' || $S_letter == '') {
         echo "<script>alert('please fill all fields')</script>";
         echo (mysqli_error($con));
-       
     } else {
-
+        move_uploaded_file($temp_image, "./staff_image/$S_image");
+        move_uploaded_file($temp_file, "./App_letters/$S_letter");
         //inserting to database
-        $sql = "INSERT INTO staff (Names,email,Id_number,Telephone,gender,Tax_pin,E_date,Designation,E_type,Department) values ('$Names','$email','$Id_number','$Telephone','$gender','$Tax_pin','$E_date','$Designation','$E_type','$Department')";
+        $sql = "INSERT INTO staff (Names,email,Id_number,Telephone,SDOB,Age,gender,Tax_pin,E_date,Designation,E_type,Department,S_image,S_letter) values ('$Names','$email','$Id_number','$Telephone','$SDOB','$Age','$gender','$Tax_pin','$E_date','$Designation','$E_type','$Department','$S_image','$S_letter')";
         $result = mysqli_query($con, $sql);
         if ($result) {
             echo "<script>alert('Staff Added successfully')</script>";
@@ -52,26 +59,31 @@ if (isset($_POST['save'])) {
                         <form class="user" action="" method="post">
                             <div class="form-group row">
                                 <!-- <div class="col-sm-6 mb-3 mb-sm-0"> -->
-                                <input type="text" class="form-control form-control-user" id="Names" name="Names"
-                                    placeholder="Names">
-                                <!-- </div> -->
-                                <!-- <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="last_Name"
-                                        name="last_name" placeholder="Last Name">
-                                </div> -->
+                                <label for="Full Name">Full Name</label>
+                                <input type="text" class="form-control form-control-user" id="Names" name="Names" placeholder="Names">
+                                <!-- </div>
+                                 -->
                             </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control form-control-user" id="email" name="email"
-                                    placeholder="Email Address">
+
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <label for="Email">Email</label>
+                                    <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email Address">
+                                </div>
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label for="National Id">National Id</label>
+                                    <input type="text" class="form-control form-control-user" id="Id_number" name="Id_number" placeholder="Id No.">
+                                </div>
+
                             </div>
                             <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" id="Id_number"
-                                        name="Id_number" placeholder="Id No.">
+                                <div class="col-sm-6">
+                                    <label for="Date of Birth">Date of Birth</label>
+                                    <input type="date" class="form-control form-control-user" id="SDOB" name="SDOB" placeholder="DOB">
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="Telephone"
-                                        name="Telephone" placeholder="Telephone No.">
+                                    <label for="Mobile Number">Mobile Number</label>
+                                    <input type="text" class="form-control form-control-user" id="Telephone" name="Telephone" placeholder="Telephone No.">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -86,23 +98,23 @@ if (isset($_POST['save'])) {
                                                         id="exampleInputPassword" placeholder="Gender"> -->
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="Tax_pin"
-                                        name="Tax_pin" placeholder="Tax Pin">
+                                    <label for="Kra Pin">Kra Pin</label>
+                                    <input type="text" class="form-control form-control-user" id="Tax_pin" name="Tax_pin" placeholder="Tax Pin">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="date" class="form-control form-control-user" id="E_date" name="E_date"
-                                        placeholder="Date of Employment">
+                                    <label for="Employement Date">Employement Date</label>
+                                    <input type="date" class="form-control form-control-user" id="E_date" name="E_date" placeholder="Date of Employment">
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="Designation"
-                                        name="Designation" placeholder="Designation">
+                                    <label for="Designation">Designation</label>
+                                    <input type="text" class="form-control form-control-user" id="Designation" name="Designation" placeholder="Designation">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                <label for="Employment Type">Employment Type</label>
+                                    <label for="Employment Type">Employment Type</label>
                                     <select name="E_type" id="E_type" class="custom-select">
                                         <option value=""></option>
                                         <option value="Permanent">Permanent</option>
@@ -111,13 +123,27 @@ if (isset($_POST['save'])) {
                                     </select>
                                 </div>
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                <label for="Department">Department</label>
+                                    <label for="Department">Department</label>
                                     <select name="Department" id="Department" class="custom-select">
                                         <option value=""></option>
                                         <option value="Ict">Ict</option>
                                         <option value="Finance">Finance</option>
                                         <option value="Operations">Operations</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <div class="col-sm-6">
+                                        <label for="passport">Staff Passport</label>
+                                        <input type="file" class=" form-control-user" id="S_image" name="S_image">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <div class="col-sm-6">
+                                        <label for="passport">Staff Appointment letter</label>
+                                        <input type="file" class=" form-control-user" id="S_letter" name="S_letter">
+                                    </div>
                                 </div>
                             </div>
                             <!-- submit -->
@@ -157,8 +183,7 @@ include("footer.php");
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

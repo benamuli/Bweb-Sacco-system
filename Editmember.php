@@ -54,7 +54,7 @@ if (isset($_POST['save'])) {
     } else {
 
         //updating database
-        $sql = "UPDATE members set id='$id',Names='$Names',Unq_number='$Unq_number',email='$email',M_no='$M_no',DOB='$DOB',Age='$Age',Telephone='$Telephone',gender='$gender',Tax_pin='$Tax_pin',Kin='$Kin',Kin_R='$Kin_R',Kin_contact='$Kin_contact' where id='$id'";
+        $sql = "UPDATE members set id='$id',Names='$Names',Unq_number='$Unq_number',email='$email',M_no='$M_no',DOB='$DOB',Age='$Age',Telephone='$Telephone',gender='$gender',Tax_pin='$Tax_pin',Kin='$Kin',Kin_R='$Kin_R',Kin_contact='$Kin_contact',M_image='$M_image',M_form='$M_form' where id='$id'";
         $result = mysqli_query($con, $sql);
         if ($result) {
             echo "<script>alert('Member Information Updated successfully')</script>";
@@ -119,7 +119,7 @@ if (isset($_POST['save'])) {
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="gender">Gender</label>
-                                    <input type="text" class="form-control form-control-user" id="exampleInputPassword" value="<?php echo $gender ?>">
+                                    <input type="text" class="form-control form-control-user" name="gender" value="<?php echo $gender ?>">
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="Kra Pin">Kra Pin</label>
@@ -143,12 +143,12 @@ if (isset($_POST['save'])) {
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="passport">Member Passport</label>
-                                    <input type="text" class=" form-control-user" id="M_image" name="M_image" value="<?php echo $M_image ?>">
+                                    <input type="file" class=" form-control-user" id="M_image" name="M_image" value="<?php echo $M_image ?>">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="passport">Member form</label>
-                                <input type="text" class="form-control " id="pdf_file" name="pdf_file" value="<?php echo $M_form ?>">
+                                <input type="file" class="form-control " id="pdf_file" name="pdf_file" value="<?php echo $M_form ?>">
                             </div>
 
                             <!-- submit -->

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 08, 2024 at 12:40 AM
+-- Generation Time: Feb 11, 2024 at 11:29 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -101,17 +101,20 @@ CREATE TABLE `members` (
   `Tax_pin` varchar(100) NOT NULL,
   `Kin` varchar(255) NOT NULL,
   `Kin_R` varchar(100) NOT NULL,
-  `Kin_contact` int(12) NOT NULL
+  `Kin_contact` int(12) NOT NULL,
+  `M_image` longblob NOT NULL,
+  `M_form` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `members`
 --
 
-INSERT INTO `members` (`id`, `Names`, `Unq_number`, `email`, `M_no`, `DOB`, `Age`, `Telephone`, `gender`, `Tax_pin`, `Kin`, `Kin_R`, `Kin_contact`) VALUES
-(1, 'Bernard Muli', 37078569, 'ben@embu.go.ke', '', '0000-00-00', 0, 798928733, 'Male', 'A00000000X', 'Lavender', '', 798928733),
-(2, 'Admin admin', 12345678, 'admin@gmail.com', '', '0000-00-00', 0, 712345678, 'Female', 'A00000001X', 'Administrator', '', 787654321),
-(3, 'Brandon Brandley', 6352410, 'info@gmail.com', '', '0000-00-00', 0, 736541278, 'Male', 'A000145756L', 'James Brandley', '', 725416387);
+INSERT INTO `members` (`id`, `Names`, `Unq_number`, `email`, `M_no`, `DOB`, `Age`, `Telephone`, `gender`, `Tax_pin`, `Kin`, `Kin_R`, `Kin_contact`, `M_image`, `M_form`) VALUES
+(1, 'Bernard Muli', 37078569, 'ben@embu.go.ke', '', '0000-00-00', 0, 798928733, 'Male', 'A00000000X', 'Lavender', '', 798928733, '', ''),
+(2, 'Admin admin', 12345678, 'admin@gmail.com', '', '0000-00-00', 0, 712345678, 'Female', 'A00000001X', 'Administrator', '', 787654321, '', ''),
+(3, 'Brandon Brandley', 6352410, 'info@gmail.com', '', '0000-00-00', 0, 736541278, 'Male', 'A000145756L', 'James Brandley', '', 725416387, '', ''),
+(4, 'Jane  Doe', 14785296, 'Jdoe@gmail.com', 'JB#123', '1999-07-07', 25, 78546123, 'Female', 'A0124563S', 'John Doe', 'Husband', 2147483647, 0x494d472d32303234303231302d5741303035352e6a7067, 'OpticalPowerMeterData.pdf');
 
 -- --------------------------------------------------------
 
@@ -139,6 +142,21 @@ INSERT INTO `products` (`id`, `product_name`, `Description`, `Interest_rate`, `D
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `regfee`
+--
+
+CREATE TABLE `regfee` (
+  `id` int(11) NOT NULL,
+  `Names` varchar(255) NOT NULL,
+  `Amount` int(11) NOT NULL,
+  `Reference` varchar(255) NOT NULL,
+  `CreatedBy` varchar(255) NOT NULL,
+  `Date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `savings`
 --
 
@@ -148,16 +166,33 @@ CREATE TABLE `savings` (
   `Mode` varchar(100) NOT NULL,
   `Reference` varchar(255) NOT NULL,
   `Amount` int(11) NOT NULL,
-  `Date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `CreatedBy` varchar(255) NOT NULL,
+  `Date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `savings`
 --
 
-INSERT INTO `savings` (`id`, `Names`, `Mode`, `Reference`, `Amount`, `Date`) VALUES
-(1, 'Admin admin', 'Mpesa', 'SAJ9GBAVKV', 16000, '0000-00-00 00:00:00'),
-(2, 'Bernard Muli', 'Cash', 'CASH', 27000, '0000-00-00 00:00:00');
+INSERT INTO `savings` (`id`, `Names`, `Mode`, `Reference`, `Amount`, `CreatedBy`, `Date`) VALUES
+(1, 'Admin admin', 'Mpesa', 'SAJ9GBAVKV', 16000, '', '0000-00-00 00:00:00'),
+(2, 'Bernard Muli', 'Cash', 'CASH', 27000, '', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shares`
+--
+
+CREATE TABLE `shares` (
+  `id` int(11) NOT NULL,
+  `Names` varchar(255) NOT NULL,
+  `Mode` varchar(100) NOT NULL,
+  `Reference` varchar(255) NOT NULL,
+  `Shares` varchar(255) NOT NULL,
+  `CreatedBy` varchar(255) NOT NULL,
+  `Date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -170,21 +205,25 @@ CREATE TABLE `staff` (
   `Names` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `Id_number` int(11) NOT NULL,
+  `SDOB` date NOT NULL,
+  `Age` int(11) NOT NULL,
   `Telephone` varchar(100) NOT NULL,
   `gender` varchar(100) NOT NULL,
   `Tax_pin` varchar(255) NOT NULL,
   `E_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `Designation` varchar(255) NOT NULL,
   `E_type` varchar(255) NOT NULL,
-  `Department` varchar(255) NOT NULL
+  `Department` varchar(255) NOT NULL,
+  `S_image` blob NOT NULL,
+  `S_letter` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `staff`
 --
 
-INSERT INTO `staff` (`id`, `Names`, `email`, `Id_number`, `Telephone`, `gender`, `Tax_pin`, `E_date`, `Designation`, `E_type`, `Department`) VALUES
-(1, 'Samuel Nyachae', 'samnyachae@gmail.com', 87456321, '072345678', 'Male', 'A00001478K', '2024-01-22 08:21:04', 'Driver', 'Contract', 'Operations');
+INSERT INTO `staff` (`id`, `Names`, `email`, `Id_number`, `SDOB`, `Age`, `Telephone`, `gender`, `Tax_pin`, `E_date`, `Designation`, `E_type`, `Department`, `S_image`, `S_letter`) VALUES
+(1, 'Samuel Nyachae', 'samnyachae@gmail.com', 87456321, '0000-00-00', 0, '072345678', 'Male', 'A00001478K', '2024-01-22 08:21:04', 'Driver', 'Contract', 'Operations', '', '');
 
 -- --------------------------------------------------------
 
@@ -265,9 +304,21 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `regfee`
+--
+ALTER TABLE `regfee`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `savings`
 --
 ALTER TABLE `savings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `shares`
+--
+ALTER TABLE `shares`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -308,13 +359,19 @@ ALTER TABLE `loans`
 -- AUTO_INCREMENT for table `members`
 --
 ALTER TABLE `members`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `regfee`
+--
+ALTER TABLE `regfee`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `savings`

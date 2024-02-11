@@ -130,16 +130,18 @@ function get_settled_loans()
    </table>";
   }
 }
-// function reg_number()
+// function reg_number($i)
 // {
-  
-//   $regNum = '';
-//   $uniqueId = str_pad($i, 2, '0', STR_PAD_LEFT);
-//   $date = date('y');
-//   $regNum = "SCH" . '\\' . $date . '\\' . $uniqueId;
-//   return $regNum;
+// for($i;$i=1;$i++){
+//     $regNum = '';
+//     $uniqueId = str_pad($i,2, '0', STR_PAD_LEFT);
+//     $date = date('y');
+//     $regNum = "JMB" . '\\' . $date . '\\' . $uniqueId;
+//     return $regNum;
+//     echo reg_number(4);
+// }
 // };
-// echo reg_number(4);
+
 // function get_total_female()
 // {
 //   global $con;
